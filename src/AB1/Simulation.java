@@ -7,7 +7,9 @@ import java.util.Random;
 
 // TODO: insert answers to questions (Zusatzfragen) in 'Aufgabenblatt1.md' as comment.
 
-// Simulates the formation of a massive solar system.
+/**
+ * Simulates the formation of a massive solar system.
+ */
 public class Simulation {
 
     // gravitational constant
@@ -32,7 +34,10 @@ public class Simulation {
 
     // all quantities are based on units of kilogram respectively second and meter.
 
-    // The main simulation method using instances of other classes.
+    /**
+     * The main simulation method using instances of other classes.
+     * @param args not used.
+     */
     public static void main(String[] args) {
 
         //TODO: change implementation of this method according to 'Aufgabenblatt1.md'.
@@ -125,12 +130,16 @@ public class Simulation {
 
     //TODO: remove static methods below.
 
-    // Draws a body in the 'cd' canvas showing a projection onto the (x,y)-plane. The body's mass
-    // center coordinates and its radius are transformed into canvas coordinates. The color of
-    // the body corresponds to the temperature of the body, assuming the relation of mass and
-    // temperature of a main sequence star.
-    // The canvas is assumed to show a quadratic SECTION_SIZE x SECTION_SIZE
-    // section of space centered arround (x, y) = (0, 0).
+    /**
+     * Draws a body in the 'cd' canvas showing a projection onto the (x,y)-plane. The body's mass
+     * center coordinates and its radius are transformed into canvas coordinates. The color of
+     * the body corresponds to the temperature of the body, assuming the relation of mass and
+     * temperature of a main sequence star.
+     * The canvas is assumed to show a quadratic SECTION_SIZE x SECTION_SIZE
+     * section of space centered arround (x, y) = (0, 0).
+     * @param cd the CodeDraw object used for drawing.
+     * @param b a body, b != null.
+     */
     public static void draw(CodeDraw cd, Body b) {
 
         cd.setColor(SpaceDraw.massToColor(b.mass));
@@ -138,10 +147,15 @@ public class Simulation {
 
     }
 
-    // Draws a filled circle in the 'cd' canvas unsing the (x,y)-coordinates of 'center'
-    // Coordinates and 'radius' are transformed into canvas coordinates. The canvas is assumed
-    // to show a quadratic SECTION_SIZE x SECTION_SIZE projection of space centered arround (x, y) =
-    // (0, 0).
+    /**
+     * Draws a filled circle in the 'cd' canvas unsing the (x,y)-coordinates of 'center'
+     * Coordinates and 'radius' are transformed into canvas coordinates. The canvas is assumed
+     * to show a quadratic SECTION_SIZE x SECTION_SIZE projection of space centered arround (x, y) =
+     * (0, 0).
+     * @param cd the CodeDraw object used for drawing.
+     * @param center the center of the circle, center != null.
+     * @param radius the radius of the circle, radius > 0.
+     */
     public static void drawAsFilledCircle(CodeDraw cd, Vector3 center, double radius) {
 
         double x = cd.getWidth() * (center.x + Simulation.SECTION_SIZE / 2) / Simulation.SECTION_SIZE;
@@ -150,8 +164,13 @@ public class Simulation {
         cd.fillCircle(x, y, Math.max(radius, 1.5));
     }
 
-    // Returns the acceleration vector of 'b1' that results from the gravitational interaction with
-    // body 'b2'. This returned vector is computed according to Newton's laws of gravitation.
+    /**
+     * Returns the acceleration vector of 'b1' that results from the gravitational interaction with
+     * body 'b2'. This returned vector is computed according to Newton's laws of gravitation.
+     * @param b1 a body, b1 != null.
+     * @param b2 another body, b2 != null.
+     * @return an acceleration vector.
+     */
     public static Vector3 acceleration(Body b1, Body b2) {
 
         // "force" F between two masses m₁ and m₂:
@@ -163,10 +182,15 @@ public class Simulation {
         return times(direction, length);
     }
 
-    // Returns a new body that is formed by the collision of 'b1' and 'b2'. The mass of the
-    // returned body is the sum of the masses of 'b1' and 'b2'. The current movement of the
-    // returned body is given by the law of conservation of momentum. (The momentum of the
-    // returned body is the sum of the momentums of 'b1' and 'b2').
+    /**
+     * Returns a new body that is formed by the collision of 'b1' and 'b2'. The mass of the
+     * returned body is the sum of the masses of 'b1' and 'b2'. The current movement of the
+     * returned body is given by the law of conservation of momentum. (The momentum of the
+     * returned body is the sum of the momentums of 'b1' and 'b2').
+     * @param b1 a body, b1 != null.
+     * @param b2 another body, b2 != null.
+     * @return the body formed by the collision.
+     */
     public static Body merge(Body b1, Body b2) {
 
         Body result = new Body();
@@ -184,7 +208,11 @@ public class Simulation {
         return result;
     }
 
-    // Accelerate the body 'b' for one second according to the 'acceleration' vector.
+    /**
+     * Accelerate the body 'b' for one second according to the 'acceleration' vector.
+     * @param b the body to be accelerated, b != null.
+     * @param acceleration the acceleration vector, acceleration != null.
+     */
     public static void accelerate(Body b, Vector3 acceleration) {
 
         // accelerate for one second and update movement
@@ -192,7 +220,12 @@ public class Simulation {
         b.massCenter = plus(b.massCenter, b.currentMovement);
     }
 
-    // Returns the norm of v1-v2.
+    /**
+     * Returns the norm of v1 minus v2.
+     * @param v1 a vector, v1 != null.
+     * @param v2 a vector, v2 != null.
+     * @return the norm of v1 - v2.
+     */
     public static double distance(Vector3 v1, Vector3 v2) {
 
         double dX = v1.x - v2.x;
@@ -202,7 +235,12 @@ public class Simulation {
         return Math.sqrt(dX * dX + dY * dY + dZ * dZ);
     }
 
-    // Returns v1+v2.
+    /**
+     * Returns v1 plus v2.
+     * @param v1 a vector, v1 != null.
+     * @param v2 a vector, v2 != null.
+     * @return a new vector representing v1 + v2.
+     */
     public static Vector3 plus(Vector3 v1, Vector3 v2) {
 
         Vector3 result = new Vector3();
@@ -213,7 +251,12 @@ public class Simulation {
         return result;
     }
 
-    // Returns v1-v2.
+    /**
+     * Returns v1 minus v2.
+     * @param v1 a vector, v1 != null.
+     * @param v2 a vector, v2 != null.
+     * @return a new vector representing v1 - v2.
+     */
     public static Vector3 minus(Vector3 v1, Vector3 v2) {
 
         Vector3 result = new Vector3();
@@ -224,7 +267,12 @@ public class Simulation {
         return result;
     }
 
-    // Returns v*d.
+    /**
+     * Returns the product of 'v' and 'd'.
+     * @param v a vector, v != null.
+     * @param d a coefficient.
+     * @return a new vector d times v.
+     */
     public static Vector3 times(Vector3 v, double d) {
 
         Vector3 result = new Vector3();
@@ -235,14 +283,21 @@ public class Simulation {
         return result;
     }
 
-    // Returns the norm of 'v'.
+    /**
+     * Returns the norm of 'v'.
+     * @param v a vector, v != null.
+     * @return the norm of v.
+     */
     public static double length(Vector3 v) {
 
         return distance(v, new Vector3()); // distance to origin.
     }
 
-    // Normalizes the specified vector 'v': changes the length of the vector such that its length
-    // becomes one. The direction and orientation of the vector is not affected.
+    /**
+     * Normalizes the specified vector 'v': changes the length of the vector such that its length
+     * becomes one. The direction of the vector is not affected.
+     * @param v vector to be normalized, v != null.
+     */
     public static void normalize(Vector3 v) {
 
         double length = length(v);
@@ -250,5 +305,4 @@ public class Simulation {
         v.y /= length;
         v.z /= length;
     }
-
 }

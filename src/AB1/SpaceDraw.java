@@ -2,19 +2,30 @@ package AB1;
 
 import java.awt.*;
 
+/**
+ * A class with utility methods.
+ */
 public class SpaceDraw {
 
-    // Returns the approximate radius of a celestial body with the specified mass.
-    // (It is assumed that the radius r is related to the mass m of the body by
-    // r = Math.pow(m, 0.5), where m and r measured in solar units.)
+    /**
+     * Returns the approximate radius of a celestial body with the specified mass.
+     * (It is assumed that the radius r is related to the mass m of the body by
+     * r = Math.pow(m, 0.5), where m and r measured in solar units.)
+     * @param mass the mass of the body in kg, mass > 0.
+     * @return the radius of the body.
+     */
     public static double massToRadius(double mass) {
 
         return Simulation.SUN_RADIUS * (Math.pow(mass / Simulation.SUN_MASS, 0.5));
     }
 
-    // Returns the approximate color of a celestial body with the specified mass. The color of
-    // the body corresponds to the temperature of the body, assuming the relation of mass and
-    // temperature of a main sequence star.
+    /**
+     * Returns the approximate color of a celestial body with the specified mass. The color of
+     * the body corresponds to the temperature of the body, assuming the relation of mass and
+     * temperature of a main sequence star.
+     * @param mass the mass of the body in kg, mass > 0.
+     * @return the color of the body.
+     */
     public static Color massToColor(double mass) {
         Color color;
         if (mass < Simulation.SUN_MASS / 10) {
@@ -28,7 +39,11 @@ public class SpaceDraw {
         return color;
     }
 
-    // Returns the approximate color of temperature 'kelvin'.
+    /**
+     * Returns the approximate color of temperature 'kelvin'.
+     * @param kelvin the temperature
+     * @return the color corresponding to the temperature.
+     */
     private static Color kelvinToColor(int kelvin) {
 
         double k = kelvin / 100D;
@@ -43,7 +58,12 @@ public class SpaceDraw {
         );
     }
 
-    // A transformation used in the method 'kelvinToColor'.
+    /**
+     * A transformation used in the method 'kelvinToColor'.
+     * @param color
+     * @param kelvin
+     * @return transformation used in the method 'kelvinToColor'.
+     */
     private static int limitAndDarken(double color, int kelvin) {
 
         int kelvinNorm = kelvin - 373;

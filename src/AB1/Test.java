@@ -1,7 +1,14 @@
 package AB1;
 
+/**
+ * A class used for testing.
+ */
 public class Test {
 
+    /**
+     * The main method.
+     * @param args not used.
+     */
     public static void main(String[] args) {
 
         //test classes Body and Vector3
@@ -43,6 +50,11 @@ public class Test {
 
     }
 
+    /**
+     * Checks two values for equality.
+     * @param given the value to be checked.
+     * @param expected the expected value.
+     */
     public static void testValue(double given, double expected) {
 
         if (given < expected + (expected+1)/1e12 && given > expected - (expected+1)/1e12) {
@@ -52,6 +64,11 @@ public class Test {
         }
     }
 
+    /**
+     * Checks two objects for equality.
+     * @param given the object to be checked.
+     * @param expected the expected object.
+     */
     public static void testEquals(Object given, Object expected) {
         if (given == expected) {
             System.out.println("Successful test");
