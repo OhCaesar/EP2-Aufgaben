@@ -143,7 +143,7 @@ public class Simulation {
     }
 
     /**
-     * Draws a filled circle in the 'cd' canvas unsing the (x,y)-coordinates of 'center'
+     * Draws a filled circle in the 'cd' canvas using the (x,y)-coordinates of 'center'
      * Coordinates and 'radius' are transformed into canvas coordinates. The canvas is assumed
      * to show a quadratic SECTION_SIZE x SECTION_SIZE projection of space centered arround (x, y) =
      * (0, 0).
