@@ -7,12 +7,29 @@ import codedraw.CodeDraw;
  */
 public class Vector3 {
 
-    //TODO: change modifiers.
-    public double x;
-    public double y;
-    public double z;
+    public static Vector3 defaultVector = new Vector3(0,0,0);
+    private double x;
+    private double y;
+    private double z;
 
-    //TODO: define constructor.
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double getZ() {
+        return z;
+    }
+
+    public Vector3(double x, double y, double z){
+        this.x=x;
+        this.y=y;
+        this.z=z;
+    }
+
 
     /**
      * Returns the sum of this vector and vector 'v'.
@@ -20,9 +37,7 @@ public class Vector3 {
      * @return the sum of this vector and vector 'v'.
      */
     public Vector3 plus(Vector3 v) {
-
-        //TODO: implement method.
-        return null;
+        return new Vector3(x+v.x,y+v.y,z+v.z);
     }
 
     /**
@@ -31,9 +46,7 @@ public class Vector3 {
      * @return the product of this vector and 'd'.
      */
     public Vector3 times(double d) {
-
-        //TODO: implement method.
-        return null;
+        return new Vector3(x*d,y*d,z*d);
     }
 
     /**
@@ -42,9 +55,7 @@ public class Vector3 {
      * @return the sum of this vector and -1*v.
      */
     public Vector3 minus(Vector3 v) {
-
-        //TODO: implement method.
-        return null;
+        return new Vector3(v.x-x,v.y-y,v.z-z);
     }
 
     /**
@@ -53,9 +64,12 @@ public class Vector3 {
      * @return the Euclidean distance of this vector to the specified vector 'v'.
      */
     public double distanceTo(Vector3 v) {
+        double dX = v.x-x;
+        double dY = v.y - y;
+        double dZ = v.z- z;
 
-        //TODO: implement method.
-        return -1d;
+        return Math.sqrt(dX * dX + dY * dY + dZ * dZ);
+
     }
 
     /**
@@ -63,9 +77,7 @@ public class Vector3 {
      * @return the length (norm) of this vector.
      */
     public double length() {
-
-        //TODO: implement method.
-        return 0;
+        return Math.sqrt(x*x+y*y+z*z);
     }
 
     /**
@@ -73,8 +85,10 @@ public class Vector3 {
      * The direction of the vector is not affected.
      */
     public void normalize() {
-
-        //TODO: implement method.
+        double vectorLenght = length();
+        x /=vectorLenght;
+        y /=vectorLenght;
+        z /=vectorLenght;
     }
 
     /**
@@ -84,8 +98,10 @@ public class Vector3 {
      * @param radius the radius > 0.
      */
     public void drawAsFilledCircle(CodeDraw cd, double radius) {
+        cd.fillCircle(cd.getWidth() * (x + Simulation.SECTION_SIZE / 2) / Simulation.SECTION_SIZE,
+                cd.getWidth() * (y + Simulation.SECTION_SIZE / 2) / Simulation.SECTION_SIZE,
+                radius);
 
-        //TODO: implement method.
     }
 
     /**
@@ -95,8 +111,7 @@ public class Vector3 {
      */
     public String toString() {
 
-        //TODO: implement method.
-        return "";
+        return "[%s, %s, %s]".formatted(x,y,z);
     }
 }
 

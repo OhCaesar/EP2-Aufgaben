@@ -13,7 +13,7 @@ public class Test {
 
         //test classes Body and Vector3
 
-        /* TODO: remove this line
+        // TODO: remove this line
         // create and test a Vector3 object
         Vector3 v = new Vector3(3.0, -1.1, 2.5);
         testValue(v.length(), 4.057092555020159);
@@ -46,7 +46,6 @@ public class Test {
         // check distance to target position (should be zero)
         testValue(earth.distanceTo(targetPositionEarth), 0);
 
-        // TODO: remove this line */
 
     }
 
