@@ -17,7 +17,7 @@ public class BodyAccelerationMap {
      * @param initialCapacity specifies the size of the internal array. initialCapacity > 0.
      */
     public BodyAccelerationMap(int initialCapacity) {
-        if(initialCapacity<0) throw new IllegalArgumentException("InitialCapacity cannot be lower than 1");
+        if(initialCapacity<0) throw new IllegalArgumentException("InitialCapacity cannot be lower than 0");
         keyArray = new Body[initialCapacity];
         valueArray = new Vector3[initialCapacity];
     }
