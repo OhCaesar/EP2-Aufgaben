@@ -15,8 +15,6 @@ public class Test {
 
         //test classes BodyQueue and BodyAccelerationMap
 
-        /* TODO: remove this line
-
         // create three bodies
         Body sun = new Body(1.989e30,new Vector3(0,0,0),new Vector3(0,0,0));
         Body earth = new Body(5.972e24,new Vector3(-1.394555e11,5.103346e10,0),
@@ -64,7 +62,6 @@ public class Test {
         testValue(bam.get(earth).distanceTo(new Vector3(0,0,0)), 0);
         testIdentity(bam.get(mercury),null);
 
-        // TODO: remove this line */
 
     }
 

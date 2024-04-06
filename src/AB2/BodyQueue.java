@@ -1,5 +1,7 @@
 package AB2;
 
+import java.util.Arrays;
+
 /**
  * A queue of bodies. A collection designed for holding bodies prior to processing.
  * The bodies of the queue can be accessed in a FIFO (first-in-first-out) manner,
@@ -9,6 +11,8 @@ package AB2;
 public class BodyQueue {
 
     //TODO: declare variables.
+    private Body[] bodyQueue;
+    private int queueSize;
 
     /**
      * Initializes this queue with an initial capacity.
@@ -16,8 +20,8 @@ public class BodyQueue {
      *                        initialCapacity > 0.
      */
     public BodyQueue(int initialCapacity) {
-
-        //TODO: define constructor.
+        bodyQueue = new Body[initialCapacity];
+        queueSize = size();
     }
 
     /**
@@ -27,8 +31,8 @@ public class BodyQueue {
      * @param q the queue from which elements are copied to the new queue, q != null.
      */
     public BodyQueue(BodyQueue q) {
-
-        //TODO: define constructor.
+        bodyQueue = Arrays.copyOf(q.bodyQueue,q.size()*2);
+        queueSize = size();
     }
 
     /**
@@ -36,8 +40,11 @@ public class BodyQueue {
      * @param b the element that is added to the queue.
      */
     public void add(Body b) {
-
-        //TODO: implement method.
+        if(queueSize == bodyQueue.length)
+            bodyQueue = Arrays.copyOf(bodyQueue,queueSize*2);
+        bodyQueue[queueSize] = b;
+        //Updating and recalculating the queues size
+        size();
     }
 
     /**
@@ -46,9 +53,13 @@ public class BodyQueue {
      * @return the head of this queue (or 'null' if this queue is empty).
      */
     public Body poll() {
+        if(queueSize==0) return null;
+        Body element = bodyQueue[0];
+        bodyQueue = Arrays.copyOfRange(bodyQueue,1,bodyQueue.length+1);
 
-        //TODO: implement method.
-        return null;
+        //Updating and recalculating the queues size
+        size();
+        return element;
     }
 
     /**
@@ -56,8 +67,10 @@ public class BodyQueue {
      * @return the number of bodies in this queue.
      */
     public int size() {
-
-        //TODO: implement method.
-        return -1;
+        int counter = 0;
+        for(Body b : bodyQueue)
+            if (b != null)  counter ++;
+        queueSize = counter;
+        return queueSize;
     }
 }
