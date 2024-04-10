@@ -10,7 +10,6 @@ import AB2.Body;
  */
 public class BodyQueue {
 
-    // uses a 'BodySinglyLinkedList' object.
     private BodySinglyLinkedList list = new BodySinglyLinkedList();
 
     /**

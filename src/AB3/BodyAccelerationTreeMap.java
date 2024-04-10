@@ -9,13 +9,14 @@ import AB2.Body;
  * The map allows multiple bodies with the same mass as long as they are not identical.
  * There is no limit on the number of key-value pairs stored in the map.
  */
+
 //
 // TODO: define further classes and methods for the implementation of the binary search tree, if
 //  needed.
 //
 public class BodyAccelerationTreeMap {
 
-    //TODO: declare variables.
+    BodyAccelerationTreeNode head;
 
 
     /**
@@ -26,8 +27,9 @@ public class BodyAccelerationTreeMap {
      * @return the old value if the key already existed in this map, or 'null' otherwise.
      */
     public Vector3 put(Body key, Vector3 value) {
+        if(head==null) head = new BodyAccelerationTreeNode(key,value);
+        else return head.setNodes(key,value);
 
-        // TODO: implement method.
         return null;
     }
 
@@ -40,8 +42,9 @@ public class BodyAccelerationTreeMap {
      */
     public Vector3 get(Body key) {
 
+
         // TODO: implement method.
-        return null;
+        return head.get(key);
     }
 
     /**
@@ -51,8 +54,7 @@ public class BodyAccelerationTreeMap {
      */
     public boolean containsKey(Body key) {
 
-        // TODO: implement method.
-        return false;
+        return get(key)!=null;
     }
 
     /**
@@ -61,9 +63,6 @@ public class BodyAccelerationTreeMap {
      */
     public String toString() {
 
-        // TODO: implement method.
-        return "";
+        return head.printableRepresentation();
     }
 }
-
-// TODO: define further classes, if needed (either here or in a separate file).
