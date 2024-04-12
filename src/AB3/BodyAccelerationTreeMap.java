@@ -42,8 +42,6 @@ public class BodyAccelerationTreeMap {
      */
     public Vector3 get(Body key) {
 
-
-        // TODO: implement method.
         return head.get(key);
     }
 
