@@ -68,6 +68,10 @@ public class Test {
         testIdentity(bl.get(3), earth);
         testIdentity(bl.get(4), mars);
 
+        BodySinglyLinkedList bl2Copy = new BodySinglyLinkedList(bl);
+        System.out.println(bl2Copy.size());
+        bl2Copy.retainSubList(1,3);
+
         // check constructor of 'BodySinglyLinkedList'
         BodySinglyLinkedList blCopy = new BodySinglyLinkedList(bl);
         testIdentity(bl, blCopy, false);

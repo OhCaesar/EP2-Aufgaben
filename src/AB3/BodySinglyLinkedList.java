@@ -218,5 +218,23 @@ public class BodySinglyLinkedList {
     public int size() {
         return listSize;
     }
+
+
+    public void retainSubList(int fromIndex,int toIndex){
+        if(fromIndex<0|| toIndex>listSize-1 || toIndex<=fromIndex) return;
+        //BodyLinkedListNode first = get(toIndex);
+
+        int pos = listSize-1; //HEADS POSITION
+
+        BodyLinkedListNode currentNode = head;
+        while (currentNode !=null){
+            if(pos == fromIndex)    currentNode.setNext(null);
+            if(pos == toIndex)    head=currentNode;
+
+            currentNode=currentNode.getNext();
+            pos--;
+        }
+        listSize = toIndex-fromIndex+1;
+    }
 }
 
