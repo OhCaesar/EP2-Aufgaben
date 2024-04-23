@@ -13,11 +13,13 @@ package AB4;
 //
 public class IntVarConstTreeMap {
 
-    //TODO: declare variables.
+
+    private IntVarConstMapNode head;
+    private int size;
+
 
     public IntVarConstTreeMap() {
-
-        //TODO: implement constructor.
+        size=0;
     }
 
     /**
@@ -26,8 +28,8 @@ public class IntVarConstTreeMap {
      * @param map the map from which key-value mappings are copied to this new map, map != null.
      */
     public IntVarConstTreeMap(IntVarConstTreeMap map) {
-
-        //TODO: implement constructor.
+        //recursive getall method
+        head = map.head.copyNode();
     }
 
     /**
@@ -38,8 +40,10 @@ public class IntVarConstTreeMap {
      * @param toCopy the list of keys specifying which key-value mappings to copy, toCopy != null.
      */
     public IntVarConstTreeMap(IntVarConstTreeMap map, IntVarDoublyLinkedList toCopy) {
-
-        //TODO: implement constructor.
+        for (int i = 0; i < toCopy.size(); i++) {
+            IntVar element = toCopy.get(i);
+            if (map.containsKey(element)) put(element,map.get(element));
+        }
     }
 
 
@@ -51,9 +55,13 @@ public class IntVarConstTreeMap {
      * @return the old value if the key already existed in this map, or 'null' otherwise.
      */
     public IntConst put(IntVar key, IntConst value) {
-
-        //TODO: implement method.
-        return null;
+        if (!containsKey(key)) size++;
+        if(head==null) {
+            head = new IntVarConstMapNode(key,value);
+            return head.getValue();
+        }
+        IntVarConstMapNode node = head.addNode(new IntVarConstMapNode(key,value));
+        return node.getValue();
     }
 
     /**
@@ -64,9 +72,7 @@ public class IntVarConstTreeMap {
      * this map).
      */
     public IntConst get(IntVar key) {
-
-        //TODO: implement method.
-        return null;
+        return head.get(key);
     }
 
     /**
@@ -75,9 +81,8 @@ public class IntVarConstTreeMap {
      * @return 'true' if this map contains a mapping for the specified key, or 'false' otherwise.
      */
     public boolean containsKey(IntVar key) {
-
-        //TODO: implement method.
-        return false;
+        if(head==null) return false;
+        return head.get(key) != null;
     }
 
     /**
@@ -85,9 +90,7 @@ public class IntVarConstTreeMap {
      * @return the number of key-value mappings in this map.
      */
     public int size() {
-
-        //TODO: implement method.
-        return -1;
+        return size;
     }
 
     /**
@@ -100,8 +103,7 @@ public class IntVarConstTreeMap {
      */
     public IntVarDoublyLinkedList keyList() {
 
-        //TODO: implement method.
-        return null;
+        return head.copyToList(new IntVarDoublyLinkedList());
     }
 }
 

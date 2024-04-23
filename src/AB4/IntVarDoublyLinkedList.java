@@ -10,14 +10,16 @@ package AB4;
 //
 public class IntVarDoublyLinkedList {
 
-    //TODO: declare variables.
+    private IntVarDoublyLinkedNode originNode;
+    private IntVarDoublyLinkedNode headNode;
+
+    private int size;
 
     /**
      * Initializes 'this' as an empty list.
      */
     public IntVarDoublyLinkedList() {
-
-        //TODO: implement constructor.
+        this.size = 0;
     }
 
     /**
@@ -25,8 +27,14 @@ public class IntVarDoublyLinkedList {
      * @param v the variable that is added ('v' can also be 'null').
      */
     public void addFirst(IntVar v) {
+        IntVarDoublyLinkedNode node = new IntVarDoublyLinkedNode(v);
+        if(originNode==null) {
+            originNode=node;
+            headNode=originNode;
+        }
+        else originNode=originNode.setPrevious(node);
+        size++;
 
-        //TODO: implement method.
     }
 
     /**
@@ -34,8 +42,13 @@ public class IntVarDoublyLinkedList {
      * @param v the variable that is added ('v' can also be 'null').
      */
     public void addLast(IntVar v) {
-
-        //TODO: implement method.
+        IntVarDoublyLinkedNode node = new IntVarDoublyLinkedNode(v);
+        if(headNode==null) {
+            headNode=node;
+            originNode=headNode;
+        }
+        else headNode=headNode.setNext(node);
+        size++;
     }
 
     /**
@@ -43,9 +56,8 @@ public class IntVarDoublyLinkedList {
      * Returns 'null' if the list is empty.
      */
     public IntVar getLast() {
-
-        //TODO: implement method.
-        return null;
+        if(headNode==null) return null;
+        return headNode.getValue();
     }
 
     /**
@@ -54,8 +66,8 @@ public class IntVarDoublyLinkedList {
      */
     public IntVar getFirst() {
 
-        //TODO: implement method.
-        return null;
+        if(originNode==null) return null;
+        return originNode.getValue();
     }
 
     /**
@@ -66,9 +78,16 @@ public class IntVarDoublyLinkedList {
      * @return the first element in this list, or 'null' if the list is empty.
      */
     public IntVar pollFirst() {
-
-        //TODO: implement method.
-        return null;
+        if(originNode==null) return null;
+        IntVar returnValue = originNode.getValue();
+        size--;
+        if (originNode==headNode) {
+            originNode = null; headNode = null;
+            return returnValue;
+        }
+        originNode=originNode.getNext();
+        originNode.setPrevious(null);
+        return returnValue;
     }
 
     /**
@@ -77,9 +96,16 @@ public class IntVarDoublyLinkedList {
      * @return the last element in this list, or 'null' if the list is empty.
      */
     public IntVar pollLast() {
-
-        //TODO: implement method.
-        return null;
+        if(headNode==null) return null;
+        IntVar returnValue = headNode.getValue();
+        if (originNode==headNode) {
+            originNode = null; headNode = null;
+            return returnValue;
+        }
+        headNode=headNode.getPrevious();
+        headNode.setNext(null);
+        size--;
+        return returnValue;
     }
 
 
@@ -91,8 +117,16 @@ public class IntVarDoublyLinkedList {
      * @param v the body that is added ('v' can also be 'null').
      */
     public void add(int i, IntVar v) {
+        if(i==0) addFirst(v);
+        IntVarDoublyLinkedNode iterable = originNode;
+        for (int j = 0; j < i; j++) {
+            if (iterable==null) return;
+            iterable=iterable.getNext();
+        }
+        IntVarDoublyLinkedNode previous = iterable.getPrevious();
+        size++;
+        new IntVarDoublyLinkedNode(v,previous,iterable);
 
-        //TODO: implement method.
     }
 
     /**
@@ -102,9 +136,12 @@ public class IntVarDoublyLinkedList {
      * @return the retrieved element at the specified position.
      */
     public IntVar get(int i) {
-
-        //TODO: implement method.
-        return null;
+        IntVarDoublyLinkedNode iterable = originNode;
+        for (int j = 0; j < i; j++) {
+            if (iterable==null) return null;
+            iterable=iterable.getNext();
+        }
+        return iterable==null ? null:iterable.getValue();
     }
 
     /**
@@ -114,9 +151,15 @@ public class IntVarDoublyLinkedList {
      * @return the element that was replaced.
      */
     public IntVar set(int i, IntVar v) {
-
-        //TODO: implement method.
-        return null;
+        if(i==0) addFirst(v);
+        IntVarDoublyLinkedNode iterable = originNode;
+        for (int j = 0; j < i; j++) {
+            if (iterable==null) return null;
+            iterable=iterable.getNext();
+        }
+        IntVar oldVal = iterable.getValue();
+        iterable.setValue(v);
+        return oldVal;
     }
 
     /**
@@ -128,8 +171,17 @@ public class IntVarDoublyLinkedList {
      */
     public IntVar remove(int i) {
 
-        //TODO: implement method.
-        return null;
+        IntVarDoublyLinkedNode iterable = originNode;
+
+        for (int j = 0; j < i; j++) {
+            if (iterable == null) return null;
+            iterable = iterable.getNext();
+        }
+        if(iterable==null) return null;
+        iterable.getPrevious().setNext(iterable.getNext());
+
+        size--;
+        return iterable.getValue();
     }
 
     /**
@@ -141,9 +193,15 @@ public class IntVarDoublyLinkedList {
      * or -1 if this list does not contain the element.
      */
     public int lastIndexOf(IntVar v) {
-
-        //TODO: implement method.
-        return -2;
+        int count = 0;
+        int lastIndex = -1;
+        IntVarDoublyLinkedNode iterable = originNode;
+        while (iterable!=null){
+            if (iterable.getValue()==v) lastIndex = count ;
+            iterable=iterable.getNext();
+            count ++;
+        }
+        return lastIndex;
     }
 
     /**
@@ -151,10 +209,8 @@ public class IntVarDoublyLinkedList {
      * @return the number of entries in this list (including 'null' entries).
      */
     public int size() {
-
-        //TODO: implement method.
-        return -1;
+        if(size<0)size=0;
+        return size;
     }
 }
 
-// TODO: define further classes, if needed (either here or in a separate file).

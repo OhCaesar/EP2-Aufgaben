@@ -28,6 +28,7 @@ public class Test {
         list.addLast(z);
         testValue(list.size(), 4);
         testIdentity(list.get(0), x);
+
         testIdentity(list.get(1), y);
         testIdentity(list.get(2), z);
         testIdentity(list.get(3), z);

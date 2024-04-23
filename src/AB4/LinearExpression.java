@@ -10,15 +10,19 @@ package AB4;
 //
 public class LinearExpression {
 
-    //TODO: declare variables.
+    IntConst singleParam;
+    IntVarConstTreeMap expressionMap;
+    IntVarDoublyLinkedList expressionList;
+
 
     /**
      * Constructs this linear expression from a specified constant.
      * @param c the constant being wrapped as this linear expression, c != null.
      */
     public LinearExpression(IntConst c) {
-
-        //TODO: implement constructor.
+        expressionMap  =new IntVarConstTreeMap();
+        expressionList = new IntVarDoublyLinkedList();
+        singleParam= c;
     }
 
     /**
@@ -26,8 +30,10 @@ public class LinearExpression {
      * @param v the variable being wrapped as this linear expression, v != null.
      */
     public LinearExpression(IntVar v) {
-
-        //TODO: implement constructor.
+        expressionMap  =new IntVarConstTreeMap();
+        expressionList = new IntVarDoublyLinkedList();
+        plus(v);
+        singleParam= new IntConst(0);
     }
 
     /**
@@ -38,8 +44,9 @@ public class LinearExpression {
      *          e != null.
      */
     public LinearExpression(LinearExpression e) {
-
-        //TODO: implement constructor.
+        singleParam = e.singleParam; //Has to be changed later
+        expressionMap = new IntVarConstTreeMap(e.expressionMap);
+        expressionList = expressionMap.keyList();
     }
 
     /**
@@ -48,9 +55,14 @@ public class LinearExpression {
      * @return the sum of 'this' and 'v'.
      */
     public LinearExpression plus(IntVar v) {
-
-        //TODO: implement method.
-        return null;
+        if(expressionMap.containsKey(v)){
+            expressionMap.put(v,expressionMap.get(v).plus(new IntConst(1)));
+        }
+        else {
+            expressionMap.put(v,new IntConst(1));
+            expressionList.addLast(v);
+        }
+        return new LinearExpression(this);
     }
 
     /**
@@ -59,9 +71,19 @@ public class LinearExpression {
      * @return the sum of 'this' and 'e'.
      */
     public LinearExpression plus(LinearExpression e) {
-
-        //TODO: implement method.
-        return null;
+        LinearExpression expression = new LinearExpression(this);
+        for (int i = 0; i < e.expressionList.size(); i++) {
+            IntVar iterableVar =  e.expressionList.get(i);
+            if(expression.expressionMap.containsKey(iterableVar)) {
+                IntConst newConst = expression.expressionMap.get(iterableVar).plus(e.expressionMap.get(iterableVar));
+                expression.expressionMap.put(iterableVar, newConst);
+            }else{
+                expression.expressionMap.put(iterableVar,e.expressionMap.get(iterableVar));
+                expression.expressionList.addFirst(iterableVar);
+            }
+        }
+        expression.singleParam=expression.singleParam.plus(e.singleParam);
+        return expression;
     }
 
     /**
@@ -70,9 +92,12 @@ public class LinearExpression {
      * @return the negative of 'this'.
      */
     public LinearExpression negate() {
-
-        //TODO: implement method.
-        return null;
+        LinearExpression expression = new LinearExpression(this);
+        for (int i = 0; i < expression.expressionList.size(); i++) {
+            expression.expressionMap.put(expression.expressionList.get(i),expression.expressionMap.get(expression.expressionList.get(i)).times(new IntConst(-1)));
+        }
+        expression.singleParam = expression.singleParam.negate();
+        return expression;
     }
 
     /**
@@ -90,9 +115,17 @@ public class LinearExpression {
      * values (as specified by 'varValues').
      */
     public LinearExpression assignValue(IntVarConstTreeMap varValues) {
+        LinearExpression expression = new LinearExpression(this);
+        IntVarDoublyLinkedList list = varValues.keyList();
+        for (int i = 0; i < list.size(); i++) {
+            IntConst c = varValues.get(list.get(i));
+            IntConst multiplier = expression.expressionMap.get(list.get(i));
+            expression.singleParam=expression.singleParam.plus(c.times(multiplier));
+            expression.expressionMap.put(list.get(i),new IntConst(0));
+        }
+        //remove value by setting value to null and then adding it to the end constant
 
-        //TODO: implement method.
-        return null;
+        return expression;
     }
 
     /**
@@ -106,9 +139,40 @@ public class LinearExpression {
      */
     @Override
     public String toString() {
+        String s = "";
+        if(expressionList.size()==0) return ""+singleParam;
 
-        //TODO: implement method.
-        return "";
+
+        for (int i = expressionList.size()-1; i >= 0; i--) {
+            IntConst mult = expressionMap.get(expressionList.get(i));
+            s+=constString(mult,i);
+        }
+        if(s.isEmpty()) return ""+singleParam;
+        if(singleParam.isZero())
+            return s;
+        else if(singleParam.lessThan(new IntConst(0)))
+            return s + "-" + singleParam;
+        else
+            return s+ "+" + singleParam;
+    }
+
+    public String constString(IntConst mult,int i){
+        String s="";
+        if (mult.lessThan(new IntConst(2))&&new IntConst(0).lessThan(mult) ){
+            if(i==expressionList.size()-1) s=""+ expressionList.get(i);
+            else s="+"+ expressionList.get(i);
+        }
+        else if (new IntConst(-2).lessThan(mult) &&mult.lessThan(new IntConst(0))) {
+            s= "-" + expressionList.get(i);
+        }
+        else if (mult.lessThan(new IntConst(0)))
+            s= ""+mult + expressionList.get(i);
+        else if (new IntConst(0).lessThan(mult)) {
+
+            if(i==expressionList.size()-1) s=""+mult+ expressionList.get(i);
+            else s=" +" +mult + expressionList.get(i) ;
+        }
+        return s;
     }
 }
 
